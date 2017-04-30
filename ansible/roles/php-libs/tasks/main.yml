@@ -1,0 +1,44 @@
+---
+- name: Check if phpcs is installed
+  stat: "path=/usr/local/bin/phpcs"
+  register: phpcs_bin
+
+- name: Getting phpcs
+  get_url:
+    url: https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
+    dest: /usr/local/bin/phpcs
+    mode: 0755
+  when: not phpcs_bin.stat.exists
+
+- name: Check if phpcbf is installed
+  stat: "path=/usr/local/bin/phpcbf"
+  register: phpcbf_bin
+
+- name: Getting phpcs
+  get_url:
+    url: https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar
+    dest: /usr/local/bin/phpcbf
+    mode: 0755
+  when: not phpcbf_bin.stat.exists
+
+- name: Check if phpmd is installed
+  stat: "path=/usr/local/bin/phpmd"
+  register: phpmd_bin
+
+- name: Getting phpmd
+  get_url:
+    url: http://static.phpmd.org/php/latest/phpmd.phar
+    dest: /usr/local/bin/phpmd
+    mode: 0755
+  when: not phpmd_bin.stat.exists
+
+- name: Check if phing is installed
+  stat: "path=/usr/local/bin/phing"
+  register: phing_bin
+
+- name: Getting phing
+  get_url:
+    url: http://www.phing.info/get/phing-latest.phar
+    dest: /usr/local/bin/phing
+    mode: 0755
+  when: not phing_bin.stat.exists
