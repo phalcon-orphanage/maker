@@ -4,7 +4,7 @@ The project that build the [Phalcon Box](https://github.com/phalcon/box) develop
 
 **Current Ubuntu Version Used**: 16.04.2
 
-This build configuration installs and configures Ubuntu 16.04 x86_64 minimal using Ansible, and then generates two Vagrant box files, for:
+This build configuration installs and configures Ubuntu 16.04 x86_64 using Ansible, and then generates two Vagrant box files, for:
 
   - VirtualBox
   - VMware
