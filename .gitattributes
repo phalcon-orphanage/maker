@@ -2,4 +2,4 @@
 * text eol=lf
 
 Vagrantfile              linguist-language=ruby
-ansible/*                linguist-language=Ansible
+*.yml                    linguist-language=Ansible
