@@ -1,0 +1,25 @@
+---
+- name: Clone the pinba repository
+  git:
+    repo: https://github.com/phalcon/php-zephir-parser.git
+    dest: /tmp/zephir-parser
+    accept_hostkey: yes
+    depth: 1
+
+- name: Install pinba extension
+  shell: |
+    ./install
+  args:
+    chdir: /tmp/zephir-parser
+    creates: /tmp/pinba_extension/modules/zephir_parser.so
+
+- name: Create zephir_parser.ini
+  template:
+    src: /tmp/ansible/templates/zephir_parser.ini.j2
+    dest: "{{ php_conf_path }}/mods-available/zephir_parser.ini"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Enable pinba extension
+  command: phpenmod zephir_parser

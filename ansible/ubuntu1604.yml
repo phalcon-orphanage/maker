@@ -32,6 +32,7 @@
     - geerlingguy.mailhog
     - geerlingguy.nodejs
     - geerlingguy.postgresql
+    - zephir-parser
     - phalcon.zephir
     - f500.beanstalkd
     - wtanaka.ngrok
