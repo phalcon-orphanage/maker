@@ -1,12 +1,11 @@
 ---
-- name: Update /etc/default/locale.
-  lineinfile:
+- name: Update /etc/default/locale
+  template:
+    src: /tmp/ansible/templates/locale.j2
     dest: /etc/default/locale
-    line: "{{ item }}"
-  with_items:
-    - "LANG={{ locale }}"
-    - "LANGUAGE={{ locale }}"
-    - "LC_ALL={{ locale }}"
+    owner: root
+    group: root
+    mode: 0644
 
 - name: Regenerate locale.
   command: locale-gen {{ locale }}

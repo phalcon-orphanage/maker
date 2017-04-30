@@ -15,9 +15,6 @@ apt-get -y upgrade
 
 apt-get -y install ansible
 
-# echo "LC_ALL=en_US.UTF-8" >> /etc/default/locale
-# locale-gen en_US.UTF-8
-
 # Add vagrant user to sudoers.
 echo "vagrant        ALL=(ALL)       NOPASSWD: ALL" >> /etc/sudoers
 sed -i "s/^.*requiretty/#Defaults requiretty/" /etc/sudoers
