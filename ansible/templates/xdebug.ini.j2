@@ -1,9 +1,14 @@
 ; {{ ansible_managed }}
 
 [Xdebug]
-zend_extension="xdebug.so"
+zend_extension = "xdebug.so"
+
+xdebug.enable = 1
 
 xdebug.remote_enable = 1
-xdebug.remote_connect_back = 1
 xdebug.remote_port = 9000
+xdebug.remote_connect_back = 1
+;xdebug.remote_host = 192.168.50.4
+
 xdebug.max_nesting_level = 512
+xdebug.idekey = PHPSTORM
