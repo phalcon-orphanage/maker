@@ -14,7 +14,7 @@
   stat: "path=/usr/local/bin/phpcbf"
   register: phpcbf_bin
 
-- name: Getting phpcs
+- name: Getting phpcbf
   get_url:
     url: https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar
     dest: /usr/local/bin/phpcbf
