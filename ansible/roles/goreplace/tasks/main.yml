@@ -1,0 +1,16 @@
+---
+- name: Set goreplace_executable variable to a default if not defined.
+  set_fact:
+    goreplace_executable: go-replace
+  when: goreplace_executable is not defined
+
+- name: Check if goreplace is installed.
+  stat: "path={{ goreplace_path }}"
+  register: goreplace_bin
+
+- name: Download goreplace
+  get_url:
+    url: https://github.com/webdevops/goreplace/releases/download/{{ goreplace_version }}/gr-64-linux
+    dest: "{{ goreplace_path }}"
+    mode: 0755
+  when: not goreplace_bin.stat.exists

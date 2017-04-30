@@ -1,0 +1,21 @@
+---
+- src: geerlingguy.packer-debian
+- src: geerlingguy.nfs
+- src: geerlingguy.nginx
+- src: geerlingguy.php
+- src: geerlingguy.composer
+- src: geerlingguy.mysql
+- src: geerlingguy.git
+- src: geerlingguy.blackfire
+- src: geerlingguy.memcached
+- src: geerlingguy.redis
+- src: geerlingguy.mysql
+- src: geerlingguy.daemonize
+- src: geerlingguy.mailhog
+- src: geerlingguy.nodejs
+- src: geerlingguy.postgresql
+- src: futurice.pip
+- src: youbond.supervisor
+- src: f500.beanstalkd
+- src: wtanaka.ngrok
+- src: phalcon.zephir

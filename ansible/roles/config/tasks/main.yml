@@ -1,0 +1,99 @@
+---
+- name: Configure php-fpm/php.ini.
+  lineinfile:
+    dest: "/etc/php/7.1/fpm/php.ini"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+  with_items:
+    - regexp: '^;cgi\.fix_pathinfo.?=.+$'
+      line: "cgi.fix_pathinfo = 1"
+
+- name: Disable xdebux for PHP-CLI.
+  command: phpdismod -s cli xdebug
+
+- name: Update PECL.
+  command: pecl channel-update pecl.php.net
+
+- name: Configure pool.d/www.conf.
+  lineinfile:
+    dest: "/etc/php/7.1/fpm/pool.d/www.conf"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+  with_items:
+    - regexp: '^listen\.owner.?=.+$'
+      line: "listen.owner = vagrant"
+    - regexp: '^listen\.group.?=.+$'
+      line: "listen.group = vagrant"
+    - regexp: '^;listen\.mode.?=.+$'
+      line: "listen.mode = 0666"
+
+- name: Self-signing a CSR for a wildcard domain.
+  lineinfile:
+    dest: "/etc/ssl/openssl.cnf"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+  with_items:
+    - regexp: '^#.?(copy_extensions.?=.+)$'
+      line: "copy_extensions = copy"
+
+- name: Copy xdebug ini into main extension config folder.
+  template:
+    src: /tmp/ansible/templates/xdebug.ini.j2
+    dest: "{{ php_conf_path }}/mods-available/xdebug.ini"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Create /etc/nginx/ssl
+  file:
+    path: /etc/nginx/ssl
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Setting up the Postgres.
+  lineinfile:
+    dest: "/etc/postgresql/9.5/main/postgresql.conf"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+  with_items:
+    - regexp: '^#.?(listen_addresses.?=.+)$'
+      line: "listen_addresses = '*'"
+
+- name: Create phalcon user and grant privileges.
+  postgresql_user:
+    name: phalcon
+    password: secret
+    encrypted: no
+    role_attr_flags: NOSUPERUSER,CREATEDB,NOCREATEROLE,NOREPLICATION,LOGIN
+  become_user: postgres
+
+- name: Update postgres user.
+  postgresql_user:
+    name: postgres
+    password: secret
+    encrypted: no
+    state: present
+  become_user: postgres
+
+- name: Allow passwordless sudo to vagrant.
+  lineinfile:
+    dest: "/etc/sudoers"
+    line: "%sudo ALL=(ALL,ALL) NOPASSWD{{':'}} ALL"
+    state: present
+
+# - name: Add timezone support to MySQL.
+#   command: "mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql --user=root --password=secret mysql"
+
+- name: Add vagrant user to groups.
+  user:
+    name: vagrant
+    uid: 1000
+    state: present
+    groups: www-data,adm,cdrom,dip,plugdev,lxd,lpadmin,sambashare
+    append: yes

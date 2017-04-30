@@ -1,0 +1,4 @@
+---
+  goreplace_version: "1.0.1"
+  goreplace_executable: go-replace
+  goreplace_path: /usr/local/bin/{{ goreplace_executable }}

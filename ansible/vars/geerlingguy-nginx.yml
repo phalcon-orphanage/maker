@@ -1,0 +1,5 @@
+---
+  nginx_remove_default_vhost: true
+  nginx_user: "vagrant"
+  nginx_ppa_use: true
+  nginx_ppa_version: development

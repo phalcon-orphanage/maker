@@ -1,0 +1,21 @@
+---
+  mysql_root_password: secret
+  mysql_root_password_update: no
+  mysql_bind_address: '0.0.0.0'
+  mysql_packages:
+    - mysql-client-core-5.7
+    - mysql-client-5.7
+    - mysql-server-5.7
+  mysql_databases:
+    - name: phalcon
+      encoding: UTF8mb4
+      collation: utf8mb4_bin
+  mysql_users:
+    - name: phalcon
+      host: "%"
+      password: secret
+      priv: "*.*:ALL,GRANT"
+    - name: phalcon
+      host: "localhost"
+      password: secret
+      priv: "*.*:ALL,GRANT"

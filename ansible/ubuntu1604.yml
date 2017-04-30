@@ -1,0 +1,41 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: yes
+  vars:
+    timezone: UTC
+    locale: en_US.UTF-8
+  vars_files:
+    - /tmp/ansible/vars/geerlingguy-nginx.yml
+    - /tmp/ansible/vars/geerlingguy-php.yml
+    - /tmp/ansible/vars/geerlingguy-composer.yml
+    - /tmp/ansible/vars/geerlingguy-redis.yml
+    - /tmp/ansible/vars/geerlingguy-mysql.yml
+    - /tmp/ansible/vars/geerlingguy-nodejs.yml
+    - /tmp/ansible/vars/geerlingguy-postgresql.yml
+    - /tmp/ansible/vars/goreplace.yml
+
+  roles:
+    - locale
+    - geerlingguy.nfs
+    - geerlingguy.packer-debian
+    - packages
+    - geerlingguy.nginx
+    - geerlingguy.php
+    - geerlingguy.git
+    - geerlingguy.composer
+    - geerlingguy.blackfire
+    - geerlingguy.memcached
+    - geerlingguy.redis
+    - geerlingguy.mysql
+    - geerlingguy.daemonize
+    - geerlingguy.mailhog
+    - geerlingguy.nodejs
+    - geerlingguy.postgresql
+    - phalcon.zephir
+    - f500.beanstalkd
+    - wtanaka.ngrok
+    - youbond.supervisor
+    - goreplace
+    - config
+    - mongodb

@@ -1,0 +1,12 @@
+---
+- name: Update /etc/default/locale.
+  lineinfile:
+    dest: /etc/default/locale
+    line: "{{ item }}"
+  with_items:
+    - "LANG={{ locale }}"
+    - "LANGUAGE={{ locale }}"
+    - "LC_ALL={{ locale }}"
+
+- name: Regenerate locale.
+  command: locale-gen {{ locale }}

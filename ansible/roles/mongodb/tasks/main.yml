@@ -1,0 +1,102 @@
+---
+- name: Import the key for the official MongoDB repository
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: 0C49F3730359A14518585931BC711F9BA15703C6
+    state: present
+
+- name: Add MongoDB repository details
+  lineinfile:
+    path: /etc/apt/sources.list.d/mongodb-org-3.4.list
+    line: "deb [ arch=amd64,arm64 ] http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.4 multiverse"
+    create: yes
+
+- name: Update APT cache
+  apt:
+    update_cache: yes
+
+- name: Install packages.
+  apt: "name={{ item }} state=installed"
+  with_items:
+    - python-pymongo
+    - mongodb-org
+
+- name: Update MongoDb config
+  lineinfile:
+    dest: /etc/mongod.conf
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+  with_items:
+    - regexp: '  bindIp.?:.+'
+      line: "  bindIp: 0.0.0.0"
+
+- name: Create MongoDb data directory.
+  file:
+    path: /var/lib/mongodb
+    state: directory
+    mode: 0755
+    owner: mongodb
+    group: mongodb
+
+- name: Create a systemctl file to be ready for systemd (MongoDB)
+  template:
+    src: /tmp/ansible/templates/mongodb.service.j2
+    dest: /etc/systemd/system/mongodb.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Disable Transparent Hugepage before MongoDB boots
+  template:
+    src: /tmp/ansible/templates/mongodb-hugepage-fix.service.j2
+    dest: /etc/systemd/system/mongodb-hugepage-fix.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Enable the mongodb service and ensure it is not masked
+  systemd:
+    name: mongodb
+    enabled: yes
+    masked: no
+    daemon_reload: yes
+
+- name: Enable the mongodb-hugepage-fix service and ensure it is not masked
+  systemd:
+    name: mongodb-hugepage-fix
+    enabled: yes
+    masked: no
+
+- name: Remove broken MongoDB sock file.
+  file:
+    path: /tmp/mongodb-27017.sock
+    state: absent
+
+- name: Restart the mongodb-hugepage-fix service
+  service:
+    state: started
+    enabled: yes
+    name: mongodb-hugepage-fix
+
+- name: Restart the mongodb service
+  service:
+    state: started
+    enabled: yes
+    name: mongodb
+
+- name: Create 'admin' database user with name 'admin' (MongoDB)
+  mongodb_user:
+    database: admin
+    name: admin
+    password: secret
+    roles: root
+    state: present
+
+- name: Create 'admin' database user with name 'phalcon' (MongoDB)
+  mongodb_user:
+    database: admin
+    name: phalcon
+    password: secret
+    roles: root
+    state: present

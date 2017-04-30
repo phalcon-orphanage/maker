@@ -1,0 +1,69 @@
+---
+- name: Install packages.
+  apt: "name={{ item }} state=installed"
+  with_items:
+    - wget
+    - curl
+    - vim
+    - dh-php
+    - python-pip
+    - python-software-properties
+    - python2.7-dev
+    - whois
+    - sqlite3
+    - libyaml-dev
+    - lsb-release
+    - lxd
+    - make
+    - mc
+    - ntfs-3g
+    - ntp
+    - pkg-config
+    - python-psycopg2
+    - pv
+    - re2c
+    - cifs-utils
+    - libsodium-dev
+    - libsqlite3-dev
+    - libssl-dev
+    - libssh2-1-dev
+    - libmcrypt4
+    - unzip
+    - valgrind
+    - htop
+    - jq
+    - grc
+    - cppcheck
+    - dos2unix
+    - file
+    - g++
+    - gcc
+    - autoconf
+    - automake
+    - autotools-dev
+    - binutils
+    - ccache
+    - check
+    - gdb
+    # - chromium-browser
+    # - graphviz
+    # - gtk2-engines-pixbuf
+    # - kcachegrind
+    # - libgconf-2-4
+    # - libgtk2.0-0
+    # - libnotify-bin
+    # - libnss3
+    # - libxpm4
+    # - libxrender1
+    # - unattended-upgrades
+    # - x11-apps
+    # - xfonts-100dpi
+    # - xfonts-75dpi
+    # - xfonts-base
+    # - xfonts-cyrillic
+    # - xfonts-scalable
+    # - xvfb
+    # - postgresql
+    # - postgresql-client-common
+    # - postgresql-common
+    # - postgresql-contrib
