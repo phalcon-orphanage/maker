@@ -41,3 +41,4 @@
     - mongodb
     - aerospike
     - handlersocketi
+    - pinba

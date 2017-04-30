@@ -1,0 +1,36 @@
+---
+- name: Clone the pinba repository
+  git:
+    repo: https://github.com/tony2001/pinba_extension.git
+    dest: /tmp/pinba_extension
+    accept_hostkey: yes
+    depth: 1
+
+- name: Install pinba extension
+  shell: |
+    phpize
+    ./configure --silent
+    make -s -j"$(getconf _NPROCESSORS_ONLN)"
+    make -s install
+  args:
+    chdir: /tmp/pinba_extension
+    creates: /tmp/pinba_extension/modules/pinba.so
+
+- name: Check pinba.so stat
+  stat: path=/tmp/pinba_extension/modules/pinba.so
+  register: pinba_stat
+
+- name: Move pinba.so to /usr/lib/php/20160303/
+  command: mv /tmp/pinba_extension/modules/pinba.so /usr/lib/php/20160303/pinba.so
+  when: pinba_stat.stat.exists
+
+- name: Create pinba.ini
+  template:
+    src: /tmp/ansible/templates/pinba.ini.j2
+    dest: "{{ php_conf_path }}/mods-available/pinba.ini"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Enable pinba extension
+  command: phpenmod pinba
