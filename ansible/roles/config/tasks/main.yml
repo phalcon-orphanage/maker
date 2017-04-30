@@ -98,3 +98,8 @@
     state: present
     groups: www-data,adm,cdrom,dip,plugdev,lxd,lpadmin,sambashare
     append: yes
+
+- name: Add Composer global bin to PATH
+  lineinfile:
+    path: /home/vagrant/.profile
+    line: "PATH=/home/vagrant/.composer/vendor/bin:$PATH"
