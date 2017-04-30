@@ -4,15 +4,31 @@
     repo: https://github.com/aerospike/aerospike-client-php
     dest: /tmp/aerospike-ext
     accept_hostkey: yes
-    depth: "{{ php_source_clone_depth }}"
+    depth: 1
+
+- name: Create libcrypto.so symlink
+  file:
+    src: /usr/lib/x86_64-linux-gnu/libcrypto.so
+    dest: /usr/local/lib/libcrypto.so
+    owner: root
+    group: root
+    state: link
+
+- name: Create libcrypto.a symlink
+  file:
+    src: /usr/lib/x86_64-linux-gnu/libcrypto.a
+    dest: /usr/local/lib/libcrypto.a
+    owner: root
+    group: root
+    state: link
 
 - name: Install Aerospike client
-  shell: >
-    cd /tmp/aerospike-ext/src/aerospike
-    ln -sf /usr/lib/x86_64-linux-gnu/libcrypto.so /usr/local/lib/libcrypto.so
-    ln -sf /usr/lib/x86_64-linux-gnu/libcrypto.a /usr/local/lib/libcrypto.a
+  shell: |
     DOWNLOAD_PHP_UNIT=0 ./build.sh --loglevel OFF
     make -s install
+  args:
+    chdir: /tmp/aerospike-ext/src/aerospike
+    creates: /usr/lib/php/20160303/aerospike.so
 
 - name: Create /etc/php/7.1/mods-available/aerospike.ini
   template:
