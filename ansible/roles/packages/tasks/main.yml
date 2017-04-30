@@ -6,6 +6,7 @@
     - automake
     - autotools-dev
     - binutils
+    - bison
     - ccache
     - check
     - chromium-browser

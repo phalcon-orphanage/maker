@@ -1,0 +1,26 @@
+---
+- name: Clone the Aerospike repository
+  git:
+    repo: https://github.com/aerospike/aerospike-client-php
+    dest: /tmp/aerospike-ext
+    accept_hostkey: yes
+    depth: "{{ php_source_clone_depth }}"
+
+- name: Install Aerospike client
+  shell: >
+    cd /tmp/aerospike-ext/src/aerospike
+    ln -sf /usr/lib/x86_64-linux-gnu/libcrypto.so /usr/local/lib/libcrypto.so
+    ln -sf /usr/lib/x86_64-linux-gnu/libcrypto.a /usr/local/lib/libcrypto.a
+    DOWNLOAD_PHP_UNIT=0 ./build.sh --loglevel OFF
+    make -s install
+
+- name: Create /etc/php/7.1/mods-available/aerospike.ini
+  template:
+    src: /tmp/ansible/templates/aerospike.ini.j2
+    dest: /etc/php/7.1/mods-available/aerospike.ini
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Enable Aerospike extension
+  command: phpenmod aerospike
