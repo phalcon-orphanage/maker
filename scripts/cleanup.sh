@@ -10,17 +10,34 @@ apt -y upgrade
 
 # Delete unneeded files
 rm -rf \
-	/root/{.bash_history,daemonize*,.composer,.npm,.wget-hsts} \
-	/home/vagrant/{.ansibl*,.bash_history,.sudo*,.wget-hsts,.cache/*,*.sh,.v8*} \
+	/root/{.bash_history,daemonize*,.composer,.npm,.wget-hsts,.pearrc} \
+	/home/vagrant/{.ansibl*,.bash_history,.sudo*,.wget-hsts,.cache/*,*.sh,.pearrc,.v8*} \
 	/var/lib/apt/lists/* \
+	/etc/apt/trusted.gpg.d/{ansible_ubuntu_ansible.gpg~,ondrej_ubuntu_php.gpg~} \
+	/etc/apt/sources.list.d/ansible-ubuntu-ansible-xenial.list.save \
 	/tmp/* \
 	/var/tmp/* \
-	/etc/apt/{sources.list~,trusted.gpg~} \
+	/etc/apt/{sources.list~,trusted.gpg~,sources.list.save} \
 	/var/cache/apt/archives/* \
-	/var/cache/debconf/*-old
+	/var/cache/debconf/*-old \
+	/var/log/installer
 
-# Workaround
+# Clean logs
+dd if=/dev/null of=/var/log/mongodb/mongod.log
+dd if=/dev/null of=/var/log/dpkg.log
+dd if=/dev/null of=/var/log/vboxadd-install.log
+dd if=/dev/null of=/var/log/vboxadd-install-x11.log
+dd if=/dev/null of=/var/log/syslog
+dd if=/dev/null of=/var/log/kern.log
+dd if=/dev/null of=/var/log/apt/history.log
+dd if=/dev/null of=/var/log/apt/term.log
+dd if=/dev/null of=/var/log/mysql/error.log
+dd if=/dev/null of=/var/log/mysql/mysql.err
+dd if=/dev/null of=/var/log/bootstrap.log
+
+# Workarounds
 rm -f /usr/local/bin/bash
+chmod -x /etc/systemd/system/mailhog.service
 
 chown -R vagrant:vagrant /home/vagrant
 
