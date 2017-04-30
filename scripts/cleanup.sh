@@ -22,6 +22,8 @@ rm -rf \
 # Workaround
 rm -f /usr/local/bin/bash
 
+chown -R vagrant:vagrant /home/vagrant
+
 # Clean logs
 dd if=/dev/null of=/var/log/syslog
 
