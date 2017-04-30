@@ -39,4 +39,4 @@
     - goreplace
     - config
     - mongodb
-    - aeropike
+    - aerospike
