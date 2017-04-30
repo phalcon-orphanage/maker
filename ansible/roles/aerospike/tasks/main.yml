@@ -30,10 +30,10 @@
     chdir: /tmp/aerospike-ext/src/aerospike
     creates: /usr/lib/php/20160303/aerospike.so
 
-- name: Create /etc/php/7.1/mods-available/aerospike.ini
+- name: Create aerospike.ini
   template:
     src: /tmp/ansible/templates/aerospike.ini.j2
-    dest: /etc/php/7.1/mods-available/aerospike.ini
+    dest: "{{ php_conf_path }}/mods-available/aerospike.ini"
     owner: root
     group: root
     mode: 0644

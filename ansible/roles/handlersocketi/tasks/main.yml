@@ -1,0 +1,37 @@
+---
+- name: Clone the handlersocketi repository
+  git:
+    repo: https://github.com/tony2001/php-ext-handlersocketi.git
+    dest: /tmp/handlersocketi-ext
+    accept_hostkey: yes
+    depth: 1
+    version: badoo-7.0
+
+- name: Install handlersocketi extension
+  shell: |
+    phpize
+    ./configure --silent
+    make -s -j"$(getconf _NPROCESSORS_ONLN)"
+    make -s install
+  args:
+    chdir: /tmp/handlersocketi-ext
+    creates: /tmp/handlersocketi-ext/modules/handlersocketi.so
+
+- name: Check handlersocketi.so stat
+  stat: path=/tmp/handlersocketi-ext/modules/handlersocketi.so
+  register: handlersocketi_stat
+
+- name: Move handlersocketi.so to /usr/lib/php/20160303/
+  command: mv /tmp/handlersocketi-ext/modules/handlersocketi.so /usr/lib/php/20160303/handlersocketi.so
+  when: handlersocketi_stat.stat.exists
+
+- name: Create handlersocketi.ini
+  template:
+    src: /tmp/ansible/templates/handlersocketi.ini.j2
+    dest: "{{ php_conf_path }}/mods-available/handlersocketi.ini"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Enable handlersocketi extension
+  command: phpenmod handlersocketi
