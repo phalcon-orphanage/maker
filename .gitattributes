@@ -1,0 +1,5 @@
+# Automatically normalize line endings for all text-based files
+* text eol=lf
+
+Vagrantfile              linguist-language=ruby
+ansible/*                linguist-language=Ansible
