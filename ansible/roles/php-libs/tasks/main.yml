@@ -42,3 +42,14 @@
     dest: /usr/local/bin/phing
     mode: 0755
   when: not phing_bin.stat.exists
+
+- name: Check if phive is installed
+  stat: "path=/usr/local/bin/phive"
+  register: phive_bin
+
+- name: Getting phive
+  get_url:
+    url: https://phar.io/releases/phive.phar
+    dest: /usr/local/bin/phive
+    mode: 0755
+  when: not phive_bin.stat.exists

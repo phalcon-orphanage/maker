@@ -20,7 +20,8 @@ rm -rf \
 	/etc/apt/{sources.list~,trusted.gpg~,sources.list.save} \
 	/var/cache/apt/archives/* \
 	/var/cache/debconf/*-old \
-	/var/log/installer
+	/var/log/installer \
+	/var/log/bootstrap.log
 
 # Clean logs
 dd if=/dev/null of=/var/log/mongodb/mongod.log
@@ -33,7 +34,9 @@ dd if=/dev/null of=/var/log/apt/history.log
 dd if=/dev/null of=/var/log/apt/term.log
 dd if=/dev/null of=/var/log/mysql/error.log
 dd if=/dev/null of=/var/log/mysql/mysql.err
-dd if=/dev/null of=/var/log/bootstrap.log
+dd if=/dev/null of=/var/log/auth.log
+dd if=/dev/null of=/var/log/alternatives.log
+dd if=/dev/null of=/var/log/fontconfig.log
 
 # Workarounds
 rm -f /usr/local/bin/bash
