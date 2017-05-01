@@ -2,10 +2,9 @@
 - hosts: all
   become: yes
   gather_facts: yes
-  vars:
-    timezone: UTC
-    locale: en_US.UTF-8
+
   vars_files:
+    - /tmp/ansible/vars/all.yml
     - /tmp/ansible/vars/geerlingguy-nginx.yml
     - /tmp/ansible/vars/geerlingguy-php.yml
     - /tmp/ansible/vars/geerlingguy-composer.yml
