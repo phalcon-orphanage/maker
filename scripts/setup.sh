@@ -1,7 +1,8 @@
 #!/bin/bash -eux
 
-apt -y update
+export DEBIAN_FRONTEND=noninteractive
 
+apt -y update
 apt -y install software-properties-common curl
 
 apt-add-repository ppa:ansible/ansible -y > /dev/null 2>&1

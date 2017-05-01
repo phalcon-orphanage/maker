@@ -1,5 +1,7 @@
 #!/bin/bash -eux
 
+export export DEBIAN_FRONTEND=noninteractive
+
 function print_green {
 	echo -e "\e[32m${1}\e[0m"
 }
