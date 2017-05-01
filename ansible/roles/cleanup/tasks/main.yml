@@ -1,0 +1,13 @@
+---
+- name: Final upgrading of the system
+  command: "{{ item }}"
+  with_items:
+    - apt -y update
+    - apt -y upgrade
+
+- name: Clean up apt
+  command: "{{ item }}"
+  with_items:
+    - apt -y clean
+    - apt -y autoremove
+    - apt -y autoclean
