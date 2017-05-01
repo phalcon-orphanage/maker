@@ -1,12 +1,12 @@
 ---
-- name: Clone the pinba repository
+- name: Clone the Zephir Parser repository
   git:
     repo: https://github.com/phalcon/php-zephir-parser.git
     dest: /tmp/zephir-parser
     accept_hostkey: yes
     depth: 1
 
-- name: Install pinba extension
+- name: Install Zephir Parser extension
   shell: |
     ./install
   args:
@@ -21,5 +21,5 @@
     group: root
     mode: 0644
 
-- name: Enable pinba extension
+- name: Enable Zephir Parser extension
   command: phpenmod zephir_parser
