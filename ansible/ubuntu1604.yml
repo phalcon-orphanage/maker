@@ -13,6 +13,7 @@
     - /tmp/ansible/vars/geerlingguy-mysql.yml
     - /tmp/ansible/vars/geerlingguy-nodejs.yml
     - /tmp/ansible/vars/geerlingguy-postgresql.yml
+    - /tmp/ansible/vars/geerlingguy-php-pecl.yml
     - /tmp/ansible/vars/goreplace.yml
 
   roles:
@@ -32,6 +33,7 @@
     - geerlingguy.mailhog
     - geerlingguy.nodejs
     - geerlingguy.postgresql
+    - geerlingguy.php-pecl
     - zephir-parser
     - phalcon.zephir
     - f500.beanstalkd
@@ -42,5 +44,6 @@
     - mongodb
     - aerospike
     - handlersocketi
+    - weakref
     - pinba
     - php-libs

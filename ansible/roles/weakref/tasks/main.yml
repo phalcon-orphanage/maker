@@ -1,0 +1,16 @@
+---
+- name: Check weakref.ini stat
+  stat: path="{{ php_conf_path }}/mods-available/weakref.ini"
+  register: weakref_stat
+
+- name: Create weakref.ini
+  template:
+    src: /tmp/ansible/templates/weakref.ini.j2
+    dest: "{{ php_conf_path }}/mods-available/weakref.ini"
+    owner: root
+    group: root
+    mode: 0644
+  when: weakref_stat.stat.exists
+
+- name: Enable weakref extension
+  command: phpenmod weakref

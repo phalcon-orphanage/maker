@@ -14,6 +14,7 @@
 - src: geerlingguy.mailhog
 - src: geerlingguy.nodejs
 - src: geerlingguy.postgresql
+- src: geerlingguy.php-pecl
 - src: futurice.pip
 - src: youbond.supervisor
 - src: f500.beanstalkd
