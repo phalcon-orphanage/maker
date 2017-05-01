@@ -15,6 +15,7 @@
     - /tmp/ansible/vars/geerlingguy-postgresql.yml
     - /tmp/ansible/vars/geerlingguy-php-pecl.yml
     - /tmp/ansible/vars/goreplace.yml
+    - /tmp/ansible/vars/pecl.yml
 
   roles:
     - locale

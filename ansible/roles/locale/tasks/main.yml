@@ -7,5 +7,5 @@
     group: root
     mode: 0644
 
-- name: Regenerate locale.
+- name: Regenerate locale
   command: locale-gen {{ locale }}

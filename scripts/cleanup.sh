@@ -1,17 +1,27 @@
 #!/bin/bash -eux
 
-# Apt cleanup.
-apt -y autoremove
-apt -y autoclean
+function print_green {
+	echo -e "\e[32m${1}\e[0m"
+}
 
-# Try to upgrade
+print_green 'Try to upgrade system'
 apt -y update
 apt -y upgrade
 
-# Delete unneeded files
+print_green 'Clean Apt'
+apt -y clean
+apt -y autoremove
+apt -y autoclean
+
+print_green 'Workarounds...'
+rm -f /usr/local/bin/bash
+chmod -x /etc/systemd/system/mailhog.service
+chown -R vagrant:vagrant /home/vagrant
+
+print_green 'Delete unneeded files'
 rm -rf \
-	/root/{.bash_history,daemonize*,.composer,.npm,.wget-hsts,.pearrc} \
-	/home/vagrant/{.ansibl*,.bash_history,.sudo*,.wget-hsts,.cache/*,*.sh,.pearrc,.v8*} \
+	/root/{daemonize*,.composer,.npm,.wget-hsts,.pearrc} \
+	/home/vagrant/{.ansibl*,.sudo*,.wget-hsts,.cache/*,*.sh,.pearrc,.v8*} \
 	/var/lib/apt/lists/* \
 	/etc/apt/trusted.gpg.d/{ansible_ubuntu_ansible.gpg~,ondrej_ubuntu_php.gpg~} \
 	/etc/apt/sources.list.d/ansible-ubuntu-ansible-xenial.list.save \
@@ -23,37 +33,26 @@ rm -rf \
 	/var/log/installer \
 	/var/log/bootstrap.log
 
-# Clean logs
-dd if=/dev/null of=/var/log/mongodb/mongod.log
-dd if=/dev/null of=/var/log/dpkg.log
-dd if=/dev/null of=/var/log/vboxadd-install.log
-dd if=/dev/null of=/var/log/vboxadd-install-x11.log
-dd if=/dev/null of=/var/log/syslog
-dd if=/dev/null of=/var/log/kern.log
-dd if=/dev/null of=/var/log/apt/history.log
-dd if=/dev/null of=/var/log/apt/term.log
-dd if=/dev/null of=/var/log/mysql/error.log
-dd if=/dev/null of=/var/log/mysql/mysql.err
-dd if=/dev/null of=/var/log/auth.log
-dd if=/dev/null of=/var/log/alternatives.log
-dd if=/dev/null of=/var/log/fontconfig.log
+print_green 'Cleanup log files'
+find /var/log -type f | while read f; do echo -ne '' > $f; done
 
-# Workarounds
-rm -f /usr/local/bin/bash
-chmod -x /etc/systemd/system/mailhog.service
+print_green 'Whiteout swap'
+swappart=`cat /proc/swaps | tail -n1 | awk -F ' ' '{print $1}'`
+swapoff $swappart
+dd if=/dev/zero of=$swappart
+mkswap -f $swappart
+swapon $swappart
 
-chown -R vagrant:vagrant /home/vagrant
-
-# Clean logs
-dd if=/dev/null of=/var/log/syslog
-
-cat /dev/null > /home/vagrant/.bash_history
-
+print_green 'Cleanup bash history'
 unset HISTFILE
+[ -f /root/.bash_history ] && rm /root/.bash_history
+[ -f /home/vagrant/.bash_history ] && rm /home/vagrant/.bash_history
 
-# Zero out the rest of the free space using dd, then delete the written file.
+print_green 'Zero out the rest of the free space using dd, then delete the written file'
 dd if=/dev/zero of=/EMPTY bs=1M
 rm -f /EMPTY
 
-# Add `sync` so Packer doesn't quit too early, before the large file is deleted.
+print_green "Add `sync` so Packer doesn't quit too early, before the large file is deleted"
 sync
+
+print_green 'Vagrant cleanup complete!'

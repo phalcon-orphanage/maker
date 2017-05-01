@@ -31,7 +31,7 @@
     - regexp: '  bindIp.?:.+'
       line: "  bindIp: 0.0.0.0"
 
-- name: Create MongoDb data directory.
+- name: Create MongoDb data directory
   file:
     path: /var/lib/mongodb
     state: directory
@@ -68,7 +68,7 @@
     enabled: yes
     masked: no
 
-- name: Remove broken MongoDB sock file.
+- name: Remove broken MongoDB sock file
   file:
     path: /tmp/mongodb-27017.sock
     state: absent

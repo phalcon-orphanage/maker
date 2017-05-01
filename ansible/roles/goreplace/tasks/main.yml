@@ -1,10 +1,10 @@
 ---
-- name: Set goreplace_executable variable to a default if not defined.
+- name: Set goreplace_executable variable to a default if not defined
   set_fact:
     goreplace_executable: go-replace
   when: goreplace_executable is not defined
 
-- name: Check if goreplace is installed.
+- name: Check if goreplace is installed
   stat: "path={{ goreplace_path }}"
   register: goreplace_bin
 
