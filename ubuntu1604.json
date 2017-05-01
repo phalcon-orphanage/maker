@@ -1,5 +1,6 @@
 {
     "description": "The project that build the Phalcon Box development environment.",
+    "min_packer_version": "1.0.0",
     "provisioners": [
         {
             "type": "file",
@@ -145,8 +146,8 @@
     ],
     "post-processors": [
         {
-            "output": "builds/{{.Provider}}-ubuntu1604.box",
-            "type": "vagrant"
+            "type": "vagrant",
+            "output": "builds/{{.Provider}}-ubuntu1604.box"
         }
     ]
 }
