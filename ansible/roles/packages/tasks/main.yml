@@ -2,23 +2,32 @@
 - name: Install packages
   apt: "name={{ item }} state=installed"
   with_items:
+    - alien
     - autoconf
     - automake
     - autotools-dev
     - binutils
+    - binutils-dev
     - bison
     - ccache
+    - cdbs
     - check
     - chromium-browser
     - cifs-utils
+    - cmake
     - cppcheck
     - curl
+    - debhelper
+    - devscripts
     - dh-php
     - dos2unix
+    - equivs
+    - fakeroot
     - file
     - g++
     - gcc
     - gdb
+    - gnupg
     - graphviz
     - grc
     - gtk2-engines-pixbuf
@@ -30,6 +39,7 @@
     - libmcrypt4
     - libnotify-bin
     - libnss3
+    - libreadline-dev
     - libsodium-dev
     - libsqlite3-dev
     - libssh2-1-dev
@@ -41,6 +51,7 @@
     - lxd
     - make
     - mc
+    - net-tools
     - ntfs-3g
     - ntp
     - pkg-config
@@ -50,6 +61,7 @@
     - python-software-properties
     - python2.7-dev
     - re2c
+    - rpm
     - sqlite3
     - unattended-upgrades
     - unzip
@@ -64,3 +76,4 @@
     - xfonts-cyrillic
     - xfonts-scalable
     - xvfb
+    - zlib1g-dev
