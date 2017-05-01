@@ -13,7 +13,7 @@ This build configuration installs and configures Ubuntu 16.04 x86_64 using Ansib
 
 The following software must be installed/present on your local machine before you can use Packer to build the Vagrant box file:
 
-  - [Packer](http://www.packer.io/)
+  - [Packer](http://www.packer.io/) >= 1.0.0
   - [Vagrant](http://vagrantup.com/)
   - [VirtualBox](https://www.virtualbox.org/) (if you want to build the VirtualBox box)
   - [VMware Fusion](http://www.vmware.com/products/fusion/) (or Workstation - if you want to build the VMware box)
