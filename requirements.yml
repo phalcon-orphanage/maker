@@ -18,5 +18,5 @@
 - src: futurice.pip
 - src: youbond.supervisor
 - src: f500.beanstalkd
-- src: wtanaka.ngrok
+- src: phalcon.ngrok
 - src: phalcon.zephir
