@@ -71,8 +71,6 @@
             "ssh_wait_timeout": "10000s",
             "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
             "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
-            "guest_additions_url": "https://www.virtualbox.org/download/testcase/{{ user `guest_additions_name` }}",
-            "guest_additions_sha256": "{{ user `guest_additions_checksum` }}",
             "virtualbox_version_file": ".vbox_version",
             "vm_name": "{{ user `template` }}",
             "vboxmanage": [
@@ -154,9 +152,7 @@
         "iso_name": "ubuntu-16.04.2-server-amd64.iso",
         "mirror": "http://releases.ubuntu.com",
         "mirror_directory": "16.04",
-        "template": "ubuntu-16.04-amd64",
-        "guest_additions_name": "VBoxGuestAdditions_5.1.21-115005.iso",
-        "guest_additions_checksum": "d348c2265b8ebae37ef3599dcbb839599093550ae1c60b0c7d471a48ecf70213"
+        "template": "ubuntu-16.04-amd64"
     },
     "post-processors": [
         {
