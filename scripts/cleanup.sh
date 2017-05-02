@@ -9,7 +9,6 @@ function print_info {
 print_info 'Workarounds...'
 rm -f /usr/local/bin/bash
 chmod -x /etc/systemd/system/mailhog.service
-chown -R vagrant:vagrant /home/vagrant
 
 print_info 'Delete unneeded files'
 rm -rf \

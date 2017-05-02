@@ -11,3 +11,12 @@
     - apt -y clean
     - apt -y autoremove
     - apt -y autoclean
+
+- name: Make vagrant home directory tree readable by vagrant user
+  file:
+    path: /home/vagrant
+    state: directory
+    mode:  "u=rwx,g=rx,o=rx"
+    owner: vagrant
+    group: vagrant
+    recurse: yes
