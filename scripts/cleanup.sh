@@ -2,25 +2,15 @@
 
 export export DEBIAN_FRONTEND=noninteractive
 
-function print_green {
-	echo -e "\e[32m${1}\e[0m"
+function print_info {
+	echo -e "\033[1;33m${1}\033[0m"
 }
 
-print_green 'Try to upgrade system'
-apt -y update
-apt -y upgrade
-
-print_green 'Clean Apt'
-apt -y clean
-apt -y autoremove
-apt -y autoclean
-
-print_green 'Workarounds...'
+print_info 'Workarounds...'
 rm -f /usr/local/bin/bash
 chmod -x /etc/systemd/system/mailhog.service
-chown -R vagrant:vagrant /home/vagrant
 
-print_green 'Delete unneeded files'
+print_info 'Delete unneeded files'
 rm -rf \
 	/root/{daemonize*,.composer,.npm,.wget-hsts,.pearrc} \
 	/home/vagrant/{.ansibl*,.sudo*,.wget-hsts,.cache/*,*.sh,.pearrc,.v8*} \
@@ -35,26 +25,26 @@ rm -rf \
 	/var/log/installer \
 	/var/log/bootstrap.log
 
-print_green 'Cleanup log files'
+print_info 'Cleanup log files'
 find /var/log -type f | while read f; do echo -ne '' > $f; done
 
-print_green 'Whiteout swap'
+print_info 'Whiteout swap'
 swappart=`cat /proc/swaps | tail -n1 | awk -F ' ' '{print $1}'`
 swapoff $swappart
 dd if=/dev/zero of=$swappart
 mkswap -f $swappart
 swapon $swappart
 
-print_green 'Cleanup bash history'
+print_info 'Cleanup bash history'
 unset HISTFILE
 [ -f /root/.bash_history ] && rm /root/.bash_history
 [ -f /home/vagrant/.bash_history ] && rm /home/vagrant/.bash_history
 
-print_green 'Zero out the rest of the free space using dd, then delete the written file'
+print_info 'Zero out the rest of the free space using dd, then delete the written file'
 dd if=/dev/zero of=/EMPTY bs=1M
 rm -f /EMPTY
 
-print_green "Add `sync` so Packer doesn't quit too early, before the large file is deleted"
+print_info "Add `sync` so Packer doesn't quit too early, before the large file is deleted"
 sync
 
-print_green 'Vagrant cleanup complete!'
+print_info 'Vagrant cleanup complete!'

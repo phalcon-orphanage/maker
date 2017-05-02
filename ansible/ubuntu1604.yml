@@ -2,10 +2,9 @@
 - hosts: all
   become: yes
   gather_facts: yes
-  vars:
-    timezone: UTC
-    locale: en_US.UTF-8
+
   vars_files:
+    - /tmp/ansible/vars/all.yml
     - /tmp/ansible/vars/geerlingguy-nginx.yml
     - /tmp/ansible/vars/geerlingguy-php.yml
     - /tmp/ansible/vars/geerlingguy-composer.yml
@@ -15,6 +14,7 @@
     - /tmp/ansible/vars/geerlingguy-postgresql.yml
     - /tmp/ansible/vars/geerlingguy-php-pecl.yml
     - /tmp/ansible/vars/goreplace.yml
+    - /tmp/ansible/vars/zephir.yml
 
   roles:
     - locale
@@ -47,3 +47,4 @@
     - weakref
     - pinba
     - php-libs
+    - cleanup
