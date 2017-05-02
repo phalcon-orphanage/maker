@@ -37,7 +37,7 @@
     - zephir-parser
     - phalcon.zephir
     - f500.beanstalkd
-    - wtanaka.ngrok
+    - phalcon.ngrok
     - youbond.supervisor
     - goreplace
     - config
