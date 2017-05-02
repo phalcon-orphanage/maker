@@ -8,6 +8,8 @@
     url: https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
     dest: /usr/local/bin/phpcs
     mode: 0755
+    owner: vagrant
+    group: vagrant
   when: not phpcs_bin.stat.exists
 
 - name: Check if phpcbf is installed
@@ -19,6 +21,8 @@
     url: https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar
     dest: /usr/local/bin/phpcbf
     mode: 0755
+    owner: vagrant
+    group: vagrant
   when: not phpcbf_bin.stat.exists
 
 - name: Check if phpmd is installed
@@ -30,6 +34,8 @@
     url: http://static.phpmd.org/php/latest/phpmd.phar
     dest: /usr/local/bin/phpmd
     mode: 0755
+    owner: vagrant
+    group: vagrant
   when: not phpmd_bin.stat.exists
 
 - name: Check if phing is installed
@@ -41,6 +47,8 @@
     url: http://www.phing.info/get/phing-latest.phar
     dest: /usr/local/bin/phing
     mode: 0755
+    owner: vagrant
+    group: vagrant
   when: not phing_bin.stat.exists
 
 - name: Check if phive is installed
@@ -52,4 +60,6 @@
     url: https://phar.io/releases/phive.phar
     dest: /usr/local/bin/phive
     mode: 0755
+    owner: vagrant
+    group: vagrant
   when: not phive_bin.stat.exists
