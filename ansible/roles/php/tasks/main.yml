@@ -1,0 +1,40 @@
+---
+- name: Disable Xdebux for PHP-CLI
+  command: phpdismod -s cli xdebug
+
+- name: Copy Xdebug configuration into main extension config folder
+  template:
+    src: /tmp/ansible/templates/xdebug.ini.j2
+    dest: "{{ php_conf_path }}/mods-available/xdebug.ini"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Configure PHP-FPM (php.ini)
+  lineinfile:
+    dest: "{{ php_fpm_conf_path }}/php.ini"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+  with_items:
+    - regexp: '^;cgi\.fix_pathinfo.?=.+$'
+      line: "cgi.fix_pathinfo = 1"
+
+- name: Configure PHP-FPM (pool.d/www.conf)
+  lineinfile:
+    dest: "{{ php_fpm_pool_conf_path }}"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+  with_items:
+    - regexp: '^listen\.owner.?=.+$'
+      line: "listen.owner = vagrant"
+    - regexp: '^listen\.group.?=.+$'
+      line: "listen.group = vagrant"
+    - regexp: '^;listen\.mode.?=.+$'
+      line: "listen.mode = 0666"
+
+- name: Restart PHP-FPMs service
+  service:
+    name: "{{ php_fpm_daemon }}"
+    state: restarted

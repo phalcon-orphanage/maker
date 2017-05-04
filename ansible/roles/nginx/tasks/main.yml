@@ -1,0 +1,24 @@
+---
+- name: Ensure the required Nginx direcories does exist
+  file:
+    path: "/etc/nginx/{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+  with_items:
+    - global
+    - ssl
+
+- name: Ensure the PHP upstream present
+  template:
+    src: 10-php.conf.j2
+    dest: /etc/nginx/conf.d/10-php.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+
+- name: Restart nginx service
+  service:
+    name: nginx
+    state: restarted

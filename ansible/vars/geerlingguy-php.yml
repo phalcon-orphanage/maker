@@ -32,6 +32,7 @@
 
   php_fpm_pool_conf_path: "{{ php_fpm_conf_path }}/pool.d/www.conf"
   php_fpm_daemon: "php{{ php_version }}-fpm"
+  php_fpm_listen: "/var/run/php/{{ php_fpm_daemon }}.sock"
 
   php_extension_conf_paths:
     - "{{ php_apache2_conf_path }}/conf.d"

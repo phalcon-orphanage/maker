@@ -1,0 +1,43 @@
+---
+- name: Ensure pyopenssl is present
+  pip:
+    name: pyopenssl
+    state: present
+
+- name: Setting up the Postgres
+  lineinfile:
+    dest: "/etc/postgresql/9.5/main/postgresql.conf"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+  with_items:
+    - regexp: '^#.?(listen_addresses.?=.+)$'
+      line: "listen_addresses = '*'"
+
+- name: Create phalcon user and grant privileges
+  postgresql_user:
+    name: phalcon
+    password: secret
+    encrypted: no
+    role_attr_flags: NOSUPERUSER,CREATEDB,NOCREATEROLE,NOREPLICATION,LOGIN
+  become_user: postgres
+
+- name: Update postgres user
+  postgresql_user:
+    name: postgres
+    password: secret
+    encrypted: no
+    state: present
+  become_user: postgres
+
+- name: Create PostgreSQL database
+  postgresql_db:
+    name: phalcon
+    owner: phalcon
+    encoding: UTF-8
+    lc_collate: "{{ locale }}"
+    lc_ctype: "{{ locale }}"
+    login_host: localhost
+    login_password: secret
+    login_user: postgres
+    state: present
