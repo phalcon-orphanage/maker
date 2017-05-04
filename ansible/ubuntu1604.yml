@@ -40,7 +40,6 @@
     - phalcon.ngrok
     - youbond.supervisor
     - goreplace
-    - config
     - postgresql
     - mongodb
     - aerospike
@@ -52,3 +51,18 @@
     - nginx
     - vagrant
     - cleanup
+
+  tasks:
+    - name: Self-signing a CSR for a wildcard domain
+      lineinfile:
+        dest: "/etc/ssl/openssl.cnf"
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+        state: present
+      with_items:
+        - regexp: '^#.?(copy_extensions.?=.+)$'
+          line: "copy_extensions = copy"
+
+    - name: Add timezone support to MySQL
+      shell: |
+        mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql --user=root --password=secret mysql
