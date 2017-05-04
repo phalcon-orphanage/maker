@@ -41,6 +41,7 @@
     - youbond.supervisor
     - goreplace
     - config
+    - postgresql
     - mongodb
     - aerospike
     - handlersocketi
