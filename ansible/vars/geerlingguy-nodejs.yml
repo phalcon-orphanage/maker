@@ -6,4 +6,9 @@
     - name: gulp
     - name: bower
     - name: yarn
+    - name: npm-check-updates
+    - name: typescript
+    - name: ts-node
+    - name: typings
     - name: grunt-cli
+    - name: grunt-init
