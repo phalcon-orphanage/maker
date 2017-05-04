@@ -1,4 +1,7 @@
 ---
+- name: Update PECL
+  command: pecl channel-update pecl.php.net
+
 - name: Check if phpcs is installed
   stat: "path=/usr/local/bin/phpcs"
   register: phpcs_bin

@@ -47,4 +47,5 @@
     - weakref
     - pinba
     - php-libs
+    - php
     - cleanup
