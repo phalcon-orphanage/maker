@@ -1,5 +1,5 @@
 ---
-- name: Disable xdebux for PHP-CLI
+- name: Disable Xdebux for PHP-CLI
   command: phpdismod -s cli xdebug
 
 - name: Copy Xdebug configuration into main extension config folder
@@ -33,3 +33,8 @@
       line: "listen.group = vagrant"
     - regexp: '^;listen\.mode.?=.+$'
       line: "listen.mode = 0666"
+
+- name: Restart PHP-FPMs service
+  service:
+    name: "{{ php_fpm_daemon }}"
+    state: restarted
