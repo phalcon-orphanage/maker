@@ -11,3 +11,44 @@
     - apt -y clean
     - apt -y autoremove
     - apt -y autoclean
+
+- name: Fix file permissions
+- file:
+    path: "{{ item }}"
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  with_items:
+    - etc/systemd/system/mailhog.service
+
+- name: Remove not needed files
+  file:
+    path: {{ item }}
+    state: absent
+  with_items:
+    - /usr/local/bin/bash
+    - /root/daemonize*
+    - /root/.composer
+    - /root/.npm
+    - /root/.wget-hsts
+    - /root/.pearrc
+    - /home/vagrant/.ansibl*
+    - /home/vagrant/.sudo*
+    - /home/vagrant/.wget-hsts
+    - /home/vagrant/.cache/*
+    - /home/vagrant/*.sh
+    - /home/vagrant/.pearrc
+    - /home/vagrant/.v8*
+    - /var/lib/apt/lists/*
+    - /etc/apt/trusted.gpg.d/ansible_ubuntu_ansible.gpg~
+    - /etc/apt/trusted.gpg.d/ondrej_ubuntu_php.gpg~
+    - /etc/apt/sources.list.d/ansible-ubuntu-ansible-xenial.list.save
+    - /tmp/*
+    - /var/tmp/*
+    - /etc/apt/sources.list~
+    - /etc/apt/trusted.gpg~
+    - /etc/apt/sources.list.save
+    - /var/cache/apt/archives/*
+    - /var/cache/debconf/*-old
+    - /var/log/installer
+    - /var/log/bootstrap.log

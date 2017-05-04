@@ -6,25 +6,6 @@ function print_info {
 	echo -e "\033[1;33m${1}\033[0m"
 }
 
-print_info 'Workarounds...'
-rm -f /usr/local/bin/bash
-chmod -x /etc/systemd/system/mailhog.service
-
-print_info 'Delete unneeded files'
-rm -rf \
-	/root/{daemonize*,.composer,.npm,.wget-hsts,.pearrc} \
-	/home/vagrant/{.ansibl*,.sudo*,.wget-hsts,.cache/*,*.sh,.pearrc,.v8*} \
-	/var/lib/apt/lists/* \
-	/etc/apt/trusted.gpg.d/{ansible_ubuntu_ansible.gpg~,ondrej_ubuntu_php.gpg~} \
-	/etc/apt/sources.list.d/ansible-ubuntu-ansible-xenial.list.save \
-	/tmp/* \
-	/var/tmp/* \
-	/etc/apt/{sources.list~,trusted.gpg~,sources.list.save} \
-	/var/cache/apt/archives/* \
-	/var/cache/debconf/*-old \
-	/var/log/installer \
-	/var/log/bootstrap.log
-
 print_info 'Cleanup log files'
 find /var/log -type f | while read f; do echo -ne '' > $f; done
 
