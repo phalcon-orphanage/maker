@@ -1,0 +1,5 @@
+# {{ ansible_managed }}
+
+upstream php {
+    server unix:{{ php_fpm_listen }};
+}

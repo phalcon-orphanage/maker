@@ -49,4 +49,5 @@
     - pinba
     - php-libs
     - php
+    - nginx
     - cleanup

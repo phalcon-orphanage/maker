@@ -9,14 +9,6 @@
     - regexp: '^#.?(copy_extensions.?=.+)$'
       line: "copy_extensions = copy"
 
-- name: Create /etc/nginx/ssl
-  file:
-    path: /etc/nginx/ssl
-    state: directory
-    owner: root
-    group: root
-    mode: 0755
-
 - name: Allow passwordless sudo to vagrant
   lineinfile:
     dest: "/etc/sudoers"
