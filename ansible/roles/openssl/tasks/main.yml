@@ -1,0 +1,15 @@
+---
+- name: Ensure pyopenssl is present
+  pip:
+    name: pyopenssl
+    state: present
+
+- name: Self-signing a CSR for a wildcard domain
+  lineinfile:
+    dest: "/etc/ssl/openssl.cnf"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+  with_items:
+    - regexp: '^#.?(copy_extensions.?=.+)$'
+      line: "copy_extensions = copy"

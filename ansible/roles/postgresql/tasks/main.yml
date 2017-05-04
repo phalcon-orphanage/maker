@@ -1,9 +1,4 @@
 ---
-- name: Ensure pyopenssl is present
-  pip:
-    name: pyopenssl
-    state: present
-
 - name: Setting up the Postgres
   lineinfile:
     dest: "/etc/postgresql/9.5/main/postgresql.conf"
