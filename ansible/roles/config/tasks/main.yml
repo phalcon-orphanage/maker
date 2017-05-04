@@ -9,25 +9,6 @@
     - regexp: '^#.?(copy_extensions.?=.+)$'
       line: "copy_extensions = copy"
 
-- name: Allow passwordless sudo to vagrant
-  lineinfile:
-    dest: "/etc/sudoers"
-    line: "%sudo ALL=(ALL,ALL) NOPASSWD{{':'}} ALL"
-    state: present
-
 - name: Add timezone support to MySQL
   shell: |
     mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql --user=root --password=secret mysql
-
-- name: Add vagrant user to groups
-  user:
-    name: vagrant
-    uid: 1000
-    state: present
-    groups: www-data,adm,cdrom,dip,plugdev,lxd,lpadmin,sambashare
-    append: yes
-
-- name: Add Composer global bin to PATH
-  lineinfile:
-    path: /home/vagrant/.profile
-    line: "PATH=/home/vagrant/.composer/vendor/bin:$PATH"

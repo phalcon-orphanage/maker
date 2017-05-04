@@ -50,4 +50,5 @@
     - php-libs
     - php
     - nginx
+    - vagrant
     - cleanup
