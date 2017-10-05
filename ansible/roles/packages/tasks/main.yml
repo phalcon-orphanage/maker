@@ -37,10 +37,16 @@
     - libbz2-dev
     - libcurl4-gnutls-dev
     - libgconf-2-4
+    - libgearman-dev
+    - libgmp-dev
+    - libgmp3-dev
     - libgtk2.0-0
     - libjpeg-turbo8-dev
+    - libmagickcore-dev
+    - libmagickwand-dev
     - libmcrypt-dev
     - libmcrypt4
+    - libmemcached-dev
     - libnotify-bin
     - libnss3
     - libpng-dev
@@ -78,6 +84,7 @@
     - vim
     - wget
     - whois
+    - wkhtmltopdf
     - x11-apps
     - xfonts-100dpi
     - xfonts-75dpi
