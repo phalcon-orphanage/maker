@@ -19,7 +19,7 @@ Vagrant Box file:
   - [Packer](http://www.packer.io/) >= 1.0.0
   - [Vagrant](http://vagrantup.com/)
   - [VirtualBox](https://www.virtualbox.org/) (if you want to build the VirtualBox box)
-  - [VMware Fusion](http://www.vmware.com/products/fusion/) (or Workstation - if you want to build the VMware box)
+  - [VMware Fusion](http://www.vmware.com/products/fusion/) (or [Workstation](https://www.vmware.com/products/workstation.html) - if you want to build the VMware box)
 
 ## Usage
 
@@ -57,4 +57,4 @@ vagrant up virtualbox --provider=virtualbox
 
 ## License
 
-Maker is open source software licensed under the MIT License. See the LICENSE file for more.
+Maker is open source software licensed under the MIT License. See the [LICENSE](https://github.com/phalcon/maker/blob/master/LICENSE) file for more.
