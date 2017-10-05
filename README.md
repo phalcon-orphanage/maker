@@ -9,7 +9,7 @@ This build configuration installs and configures Ubuntu using
   - VirtualBox
   - VMware
 
-**Current Ubuntu version used**: 16.04.2
+**Current Ubuntu version used**: 16.04.3
 
 ## Requirements
 
