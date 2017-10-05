@@ -21,9 +21,10 @@
     - geerlingguy.nfs
     - geerlingguy.packer-debian
     - packages
+    - geerlingguy.git
     - geerlingguy.nginx
     - geerlingguy.php
-    - geerlingguy.git
+    - geerlingguy.php-pecl
     - geerlingguy.composer
     - geerlingguy.blackfire
     - geerlingguy.memcached
@@ -33,12 +34,11 @@
     - geerlingguy.mailhog
     - geerlingguy.nodejs
     - geerlingguy.postgresql
-    - geerlingguy.php-pecl
     - zephir-parser
     - phalcon.zephir
     - f500.beanstalkd
     - phalcon.ngrok
-    - youbond.supervisor
+    - ScorpionResponse.supervisord
     - goreplace
     - postgresql
     - mongodb

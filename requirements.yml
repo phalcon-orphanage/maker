@@ -2,10 +2,11 @@
 - src: geerlingguy.packer-debian
 - src: geerlingguy.nfs
 - src: geerlingguy.nginx
+- src: geerlingguy.git
 - src: geerlingguy.php
+- src: geerlingguy.php-pecl
 - src: geerlingguy.composer
 - src: geerlingguy.mysql
-- src: geerlingguy.git
 - src: geerlingguy.blackfire
 - src: geerlingguy.memcached
 - src: geerlingguy.redis
@@ -14,9 +15,8 @@
 - src: geerlingguy.mailhog
 - src: geerlingguy.nodejs
 - src: geerlingguy.postgresql
-- src: geerlingguy.php-pecl
-- src: futurice.pip
-- src: youbond.supervisor
+- src: ScorpionResponse.pip
+- src: ScorpionResponse.supervisord
 - src: f500.beanstalkd
 - src: phalcon.ngrok
 - src: phalcon.zephir
