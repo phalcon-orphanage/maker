@@ -1,10 +1,4 @@
 ---
-- name: Final upgrading of the system
-  command: "{{ item }}"
-  with_items:
-    - apt -y update
-    - apt -y upgrade
-
 - name: Clean up apt
   command: "{{ item }}"
   with_items:
@@ -31,13 +25,11 @@
     - /root/.composer
     - /root/.npm
     - /root/.wget-hsts
-    - /root/.pearrc
     - /home/vagrant/.ansibl*
     - /home/vagrant/.sudo*
     - /home/vagrant/.wget-hsts
     - /home/vagrant/.cache/*
     - /home/vagrant/*.sh
-    - /home/vagrant/.pearrc
     - /home/vagrant/.v8*
     - /var/lib/apt/lists/*
     - /etc/apt/trusted.gpg.d/ansible_ubuntu_ansible.gpg~
