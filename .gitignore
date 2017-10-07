@@ -5,8 +5,5 @@
 #
 # https://help.github.com/articles/ignoring-files/#create-a-global-gitignore
 
-/output-virtualbox-iso
-/packer_cache/*
 *.box
-/iso/*
 .vagrant
