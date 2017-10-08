@@ -3,7 +3,6 @@
 
 # Configure provider
 class Provider
-  # Default port forwarding
   SUPPORTED_PROVIDERS = %i(vmware_desktop vmware_fusion vmware_workstation virtualbox).freeze
 
   attr_accessor :current
