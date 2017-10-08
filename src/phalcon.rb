@@ -84,7 +84,7 @@ class Phalcon
 
   # Configure custom ports
   def configure_ports
-    ports = Ports.new(config, settings)
+    ports = Ports.new(config)
     ports.configure
   end
 
