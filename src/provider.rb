@@ -11,7 +11,6 @@ class Provider
     current = detect_provider
     validate current
 
-    ENV['VAGRANT_DEFAULT_PROVIDER'] = current.to_s
     @current = current
   end
 

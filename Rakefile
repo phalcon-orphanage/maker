@@ -30,6 +30,7 @@ task :build do
     abort("Unsupported provider: #{provider}")
   end
 
+  ENV['VAGRANT_DEFAULT_PROVIDER'] = provider
   build_image provider
 end
 
@@ -47,6 +48,8 @@ def build_image(provider)
 
   defrag provider
   shrink provider
+
+  package provider
 end
 
 def defrag(provider)
@@ -64,6 +67,8 @@ end
 def package(provider)
   if VMWARE_PROVIDERS.include? provider
     package_vmware(provider)
+  else
+    package_virtualbox
   end
 end
 
@@ -77,7 +82,7 @@ def package_vmware(provider)
 end
 
 def package_virtualbox
-  # TODO
+  run 'vagrant package --base --output builds/virtualbox-ubuntu-16.04.box'
 end
 
 def print_when_success(message)
