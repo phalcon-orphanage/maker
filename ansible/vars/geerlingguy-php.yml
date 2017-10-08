@@ -53,10 +53,9 @@
     - libpcre3-dev
     - php-apcu
     - php-apcu-bc
-    - php-gearman
     - php-igbinary
     - php-imagick
-    - php-libsodium
+    - php-sodium
     - php-memcache
     - php-memcached
     - php-mongodb

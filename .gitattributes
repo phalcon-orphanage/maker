@@ -1,7 +1,8 @@
 # Automatically normalize line endings for all text-based files
 * text eol=lf
 
+Rakefile                 linguist-language=ruby
 Vagrantfile              linguist-language=ruby
+
 *.yml                    linguist-language=YAML
 *.j2                     linguist-language=Jinja2
-

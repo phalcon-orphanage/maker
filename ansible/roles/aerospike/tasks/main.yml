@@ -24,10 +24,10 @@
 
 - name: Install Aerospike client
   shell: |
-    DOWNLOAD_PHP_UNIT=0 ./build.sh --loglevel OFF
+    ./build.sh --loglevel OFF
     make -s install
   args:
-    chdir: /tmp/aerospike-ext/src/aerospike
+    chdir: /tmp/aerospike-ext/src
     creates: /usr/lib/php/20160303/aerospike.so
 
 - name: Create aerospike.ini
