@@ -1,10 +1,16 @@
+# -*- mode: ruby -*-
+# frozen_string_literal: true
+
 require 'fileutils'
-require 'src/provider'
 
 CWD = File.dirname(__FILE__)
 DEFAULT_PROVIDER = 'virtualbox'.freeze
 DISTRO_RELEASE = 'ubuntu-16.04'.freeze
 SUPPORTED_PROVIDERS = %i(vmware_desktop vmware_fusion vmware_workstation virtualbox).freeze
+VMWARE_PROVIDERS = %i(vmware_desktop vmware_fusion vmware_workstation).freeze
+
+VMWARE_DISK_PATH = '.vagrant/machines/maker/vmware_fusion/*-*-*-*-*'.freeze
+VMWARE_DISK_MANAGER = '/Applications/VMware\ Fusion.app/Contents/Library/vmware-vdiskmanager'.freeze
 
 BANNER = "What provider do you want to use? (default: #{DEFAULT_PROVIDER}): "
          .freeze
@@ -12,11 +18,11 @@ BANNER = "What provider do you want to use? (default: #{DEFAULT_PROVIDER}): "
 task default: %w[all]
 
 desc 'Build Vagrant Box and prepare it to release'
-task :all => [:build] do
+task :all => [:destroy, :build] do
 end
 
 desc 'Build Vagrant Box'
-task :build => [:destroy] do
+task :build do
   provider = ask "\n#{BANNER}"
   provider ||= DEFAULT_PROVIDER
 
@@ -36,6 +42,40 @@ def build_image(provider)
 
   run "time vagrant up --provider=#{provider} 2>&1 | tee #{log_file}"
   run 'vagrant halt'
+
+  defrag provider
+  shrink provider
+end
+
+def defrag(provider)
+  return unless VMWARE_PROVIDERS.include? provider
+
+  run "#{VMWARE_DISK_MANAGER} -d .vagrant/machines/maker/#{provider}/*-*-*-*-*/disk-cl1.vmdk"
+end
+
+def shrink(provider)
+  return unless VMWARE_PROVIDERS.include? provider
+
+  run "#{VMWARE_DISK_MANAGER} -k .vagrant/machines/maker/#{provider}/*-*-*-*-*/disk-cl1.vmdk"
+end
+
+def package(provider)
+  if VMWARE_PROVIDERS.include? provider
+    package_vmware(provider)
+  end
+end
+
+def package_vmware(provider)
+  Dir.chdir(".vagrant/machines/maker/#{provider}/*-*-*-*-*") do
+    FileUtils.rm_f('vmware.log')
+    run "tar cvzf ../../../../../builds/#{provider}-ubuntu-16.04.box *"
+  end
+
+  process_info Dir["./builds/#{provider}-ubuntu-16.04.box"].to_s
+end
+
+def package_virtualbox
+  # TODO
 end
 
 def print_when_success(message)
