@@ -1,0 +1,45 @@
+---
+- name: Update /etc/default/locale
+  template:
+    src: /tmp/ansible/templates/locale.j2
+    dest: /etc/default/locale
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Regenerate locale
+  command: locale-gen {{ locale }}
+
+- name: Ensure apt cache is updated.
+  apt: update_cache=yes cache_valid_time=3600
+
+- name: Ensure correct kernel headers are installed.
+  shell: "apt-get -y install linux-headers-$(uname -r)"
+
+- name: Add configuration to update apt cache on boot.
+  copy:
+    src: refresh-apt.conf
+    dest: /etc/init/refresh-apt.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Configure SSH daemon.
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+  with_items:
+    - regexp: '^UseDNS'
+      line: 'UseDNS no'
+    - regexp: '^GSSAPIAuthentication'
+      line: 'GSSAPIAuthentication no'
+
+- name: Configure Vagrant .ssh directory.
+  file:
+    path: /home/vagrant/.ssh
+    state: directory
+    owner: vagrant
+    group: vagrant
+    mode: 0700

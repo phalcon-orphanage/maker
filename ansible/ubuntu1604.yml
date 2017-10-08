@@ -17,9 +17,10 @@
     - /tmp/ansible/vars/zephir.yml
 
   roles:
-    - locale
+    #- locale
+    - init
     - geerlingguy.nfs
-    - geerlingguy.packer-debian
+    #- geerlingguy.packer-debian
     - packages
     - geerlingguy.git
     - geerlingguy.nginx
