@@ -9,3 +9,4 @@
 *.gem
 .vagrant
 .bundle
+ansible/ubuntu1604.retry
