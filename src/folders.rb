@@ -4,8 +4,8 @@
 # Register all of the configured shared folders
 class Folders
   SYNCED_FOLDERS = [
-    { map: './', to: '/vagrant', type: 'nfs' },
-    { map: './ansible', to: '/ansible', type: 'nfs' },
+    { map: './', to: '/vagrant' },
+    { map: './ansible', to: '/ansible' },
   ].freeze
 
   attr_accessor :config
