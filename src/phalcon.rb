@@ -35,6 +35,11 @@ class Phalcon
     configure_shell_provision
   end
 
+  def after_provision
+    config.vm.provision :shell, path: './scripts/cleanup.sh'
+    config.vm.provision :shell, inline: 'echo Vagrant Box created!'
+  end
+
   private
 
   # Configure provider

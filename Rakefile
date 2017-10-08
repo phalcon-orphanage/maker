@@ -1,11 +1,13 @@
 # -*- mode: ruby -*-
 # frozen_string_literal: true
 
+require 'json'
 require 'fileutils'
 
 CWD = File.dirname(__FILE__)
 DEFAULT_PROVIDER = 'virtualbox'.freeze
 DISTRO_RELEASE = 'ubuntu-16.04'.freeze
+
 SUPPORTED_PROVIDERS = %i(vmware_desktop vmware_fusion vmware_workstation virtualbox).freeze
 VMWARE_PROVIDERS = %i(vmware_desktop vmware_fusion vmware_workstation).freeze
 
@@ -75,6 +77,12 @@ end
 def package_vmware(provider)
   Dir.chdir(".vagrant/machines/maker/#{provider}/*-*-*-*-*") do
     FileUtils.rm_f('vmware.log')
+
+    metadata = { :provider => "#{provider}" }
+    File.open('metadata.json', 'w') do |f|
+      f.write(metadata.to_json)
+    end
+
     run "tar cvzf ../../../../../builds/#{provider}-ubuntu-16.04.box *"
   end
 
@@ -82,7 +90,7 @@ def package_vmware(provider)
 end
 
 def package_virtualbox
-  run 'vagrant package --base --output builds/virtualbox-ubuntu-16.04.box'
+  run 'vagrant package --base maker --output builds/virtualbox-ubuntu-16.04.box'
 end
 
 def print_when_success(message)
