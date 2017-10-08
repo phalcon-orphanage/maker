@@ -26,7 +26,9 @@ task :build do
   provider = ask "\n#{BANNER}"
   provider ||= DEFAULT_PROVIDER
 
-  abort("Unsupported provider: #{current}") unless SUPPORTED_PROVIDERS.include? current
+  if SUPPORTED_PROVIDERS.include? provider
+    abort("Unsupported provider: #{provider}")
+  end
 
   build_image provider
 end
