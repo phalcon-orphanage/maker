@@ -82,7 +82,7 @@ def package_vmware(provider)
 end
 
 def package_virtualbox
-  run 'vagrant package --base --output builds/virtualbox-ubuntu-16.04.box'
+  run 'vagrant package --base maker --output builds/virtualbox-ubuntu-16.04.box'
 end
 
 def print_when_success(message)
