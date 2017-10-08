@@ -1,27 +1,39 @@
 require 'fileutils'
+require 'src/provider'
 
 CWD = File.dirname(__FILE__)
 DEFAULT_PROVIDER = 'virtualbox'.freeze
 DISTRO_RELEASE = 'ubuntu-16.04'.freeze
+SUPPORTED_PROVIDERS = %i(vmware_desktop vmware_fusion vmware_workstation virtualbox).freeze
 
 BANNER = "What provider do you want to use? (default: #{DEFAULT_PROVIDER}): "
          .freeze
 
 task default: %w[all]
 
-desc 'Build Vagrant Boxes'
-task :build do
+desc 'Build Vagrant Box and prepare it to release'
+task :all => [:build] do
+end
+
+desc 'Build Vagrant Box'
+task :build => [:destroy] do
   provider = ask "\n#{BANNER}"
   provider ||= DEFAULT_PROVIDER
 
+  abort("Unsupported provider: #{current}") unless SUPPORTED_PROVIDERS.include? current
+
   build_image provider
+end
+
+desc 'Destroy Vagrant Box'
+task :destroy do
+  run 'vagrant destroy -f'
+  FileUtils.rm_rf('.vagrant')
 end
 
 def build_image(provider)
   log_file = "#{CWD}/logs/#{provider}-#{DISTRO_RELEASE}.log"
 
-  run 'vagrant destroy -f'
-  FileUtils.rm_rf('.vagrant')
   run "time vagrant up --provider=#{provider} 2>&1 | tee #{log_file}"
   run 'vagrant halt'
 end
