@@ -11,6 +11,7 @@ class Provider
     current = detect_provider
     validate current
 
+    ENV['VAGRANT_DEFAULT_PROVIDER'] = current.to_s
     @current = current
   end
 
@@ -18,7 +19,7 @@ class Provider
 
   # Workaround for mitchellh/vagrant#1867
   def detect_provider
-    if ARGV[1] and (ARGV[1].split('=')[0] == '--provider' or ARGV[2])
+    if ARGV[1] and (ARGV[1].split('=')[0] == '--provider' or (ARGV[0] != 'package' and ARGV[2]))
       return (ARGV[1].split('=')[1] || ARGV[2]).to_sym
     end
 
