@@ -4,7 +4,6 @@
 require_relative 'provider'
 require_relative 'settings'
 require_relative 'vbguest'
-require_relative 'networks'
 require_relative 'vurtualbox'
 require_relative 'vmware'
 require_relative 'ports'
@@ -29,7 +28,6 @@ class Phalcon
 
   def configure
     configure_vbguest
-    configure_networks
     configure_vms
     configure_ports
     configure_folders
@@ -65,12 +63,6 @@ class Phalcon
   def configure_vbguest
     vbguest = Vbguest.new(config, settings)
     vbguest.configure
-  end
-
-  # Configure networks
-  def configure_networks
-    networks = Networks.new(config, settings)
-    networks.configure
   end
 
   # Configure VMs
